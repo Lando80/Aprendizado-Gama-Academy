@@ -1,41 +1,22 @@
 console.log('Olá Enfermeira');
 
-import { createServer } from 'http';
-import { parse } from 'querystring';
+import express, { request, response } from 'express';
 
-const server = createServer((request, response) => {
-    switch(request.url){
-        case '/status': {
-            response.writeHead(200,{
-                'Content-Type': 'application/json',
-            });
-            response.write(
-                JSON.stringify({
-                    status: 'OuKay',
-                })
-            );
-            response.end();
-            break;
-        }
-        case '/authenticate': {
-            let data = '';
-            request.on('data', (chunk) => {
-                data += chunk;
-            });
-            request.on('end', () => {
-                const params = parse(data);
-               
-                response.end();
-            });
-            break;
-        }
+const server = express();
 
-        default: {
-            response.writeHead(404, 'Serviço não encontrado');
-            response.write('Erro 404, Servico nao encontrado, Algo errado nao esta certo!!');
-            response.end();
-        }
-    }
+server.get('/status', (_, response) => {
+    response.send({
+        status: 'Oquey',
+    });
+});
+
+server.post('/authenticate', express.json(), (request, response) => {
+    console.log(
+        'E-mail', request.body.email,
+        'Senha', request.body.password
+    );
+
+    response.send();
 });
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 8000;
