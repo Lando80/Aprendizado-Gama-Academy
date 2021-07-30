@@ -16,9 +16,9 @@ export default function SignIn() {
                 password
             }),
         })
-            .then((Response) => Response.json())
-            .then(() =>{
-                console.log('Sucesso! uhuuuuu!!')
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Sucesso! uhuuuuu!!', data);
             });
     };
 
@@ -35,7 +35,7 @@ export default function SignIn() {
                     type="email"
                     value={email}
                     onChange={handleEmailChange}
-                    inputmode="email"
+                    inputMode="email"
                     autoComplete="username"
                     />
             </fieldset>
